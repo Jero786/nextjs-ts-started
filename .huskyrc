@@ -1,0 +1,6 @@
+{
+  "hooks": {
+    "pre-commit": "lint-staged"
+  },
+  "ignore": ["node_modules", "dist", "package-lock.json", ".lintstagedrc"]
+}

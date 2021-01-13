@@ -1,5 +1,9 @@
 {
   "compilerOptions": {
+    "baseUrl": "src",
+    "paths": {
+      "test-utils": ["./src/utils/tests"]
+    },
     "target": "esnext",
     "module": "esnext",
     "jsx": "preserve",
