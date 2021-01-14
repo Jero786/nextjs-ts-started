@@ -8,7 +8,7 @@ describe("<Home/>", () => {
   test("Should display text of the home properly", async () => {
     render(<Home />)
 
-    const items = await screen.findAllByText(/vivi/)
+    const items = await screen.findAllByText(/Hello World/)
 
     expect(items).toHaveLength(1)
   })

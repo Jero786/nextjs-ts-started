@@ -1,3 +1,4 @@
+import React from "react"
 import {ThemeProvider} from "styled-components"
 import {render as renderLib, queries} from "@testing-library/react"
 
