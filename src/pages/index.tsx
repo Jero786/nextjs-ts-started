@@ -1,11 +1,18 @@
-import React from "react"
+import React, {FC} from "react"
+import Link from "next/link"
 
 import Box from "~/components/Box"
 
-export default function Home() {
+export const Home: FC<JSX.Element> = () => {
   return (
     <Box color="black" bg="blue">
-      Hello World
+      <Link href="/quiz">
+        <a>Go to Quiz</a>
+      </Link>
     </Box>
   )
 }
+
+Home.displayName = "HomePage"
+
+export default Home

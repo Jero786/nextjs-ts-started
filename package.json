@@ -1,5 +1,5 @@
 {
-  "name": "nextjs-ts-started",
+  "name": "beauty-bag",
   "version": "1.0.0",
   "scripts": {
     "dev": "next",
@@ -44,5 +44,10 @@
     "typescript": "4.0"
   },
   "license": "MIT",
-  "ignore": ["node_modules", "dist", "package-lock.json", ".lintstagedrc"]
+  "ignore": [
+    "node_modules",
+    "dist",
+    "package-lock.json",
+    ".lintstagedrc"
+  ]
 }

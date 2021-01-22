@@ -25,3 +25,17 @@ yarn test:watch
 ```
 yarn format
 ```
+
+## Context
+
+### Model
+
+The model of this project is in `.src/domain`
+
+### User Interface
+
+You will find the UI from: `.src/components` and the `.src/pages/`
+
+### API Rest Interface
+
+You will find the UI from: `.src/pages/api`

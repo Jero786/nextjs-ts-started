@@ -4,6 +4,6 @@ import {color} from "styled-system"
 const Box = styled.div`
   ${color}
   font-size: 50px;
-  background-color: ${({theme}) => theme.colors.blue};
+  color: ${({theme}) => theme.colors.black};
 `
 export default Box
