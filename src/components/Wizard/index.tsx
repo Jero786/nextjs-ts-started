@@ -31,17 +31,18 @@ export const Wizard: FC<WizardProps> = ({children, onSubmit}: WizardProps) => {
 }
 
 function loadStepsModel(children: JSX.Element, stepsModel: StepsModel) {
-  return React.Children.map(children, (step, index) => {
-    if (stepsModel[index] === undefined) {
-      stepsModel[index] = step.props.defaultValue
+  return React.Children.map(children, (step, stepIndex) => {
+    if (stepsModel[stepIndex] === undefined) {
+      stepsModel[stepIndex] = step.props.defaultValue
     }
+
     return React.cloneElement(step, {
       ...step.props,
-      id: index,
-      key: `step-${index}-key`,
-      value: stepsModel[index],
-      onClick: (radioId: number, isChecked: boolean) => {
-        stepsModel[radioId] = isChecked
+      id: stepIndex,
+      key: `step-${stepIndex}-key`,
+      value: stepsModel[stepIndex],
+      onClick: (value: boolean | number) => {
+        stepsModel[stepIndex] = value // could be boolean | number (single selection) | number[] (multi selection)
       }
     })
   })

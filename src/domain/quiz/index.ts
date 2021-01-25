@@ -17,7 +17,7 @@ interface QuizBuilderType {
 }
 
 type BinaryAnswer = true | false
-type SingleAnswer = string
+type SingleAnswer = number
 type MultiAnswer = string[]
 export type AnswerOption = SingleAnswer | MultiAnswer | BinaryAnswer
 
@@ -35,8 +35,8 @@ export class ASystem {
         Question.about(
           QuestionEnum.IS_SKIN_SENSIBLE,
           QUESTION_MULTI_TEXT,
-          [true, false],
-          "BINARY"
+          ["aaa", "bbb", "ccc"],
+          "SINGLE"
         )
       )
       .addQuestion(

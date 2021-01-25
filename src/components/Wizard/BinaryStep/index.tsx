@@ -5,7 +5,7 @@ interface WizardBinaryStepProps {
 }
 
 interface WizardBinaryStepInternal {
-  readonly onClick?: (radioId: number, isChecked: boolean) => void
+  readonly onClick?: (isChecked: boolean) => void
   readonly value?: boolean
   readonly defaultValue?: boolean
   readonly id?: number
@@ -14,8 +14,7 @@ interface WizardBinaryStepInternal {
 export const WizardBinaryStep: FC<WizardBinaryStepProps> = ({
   question,
   value,
-  onClick,
-  id
+  onClick
 }: WizardBinaryStepProps & WizardBinaryStepInternal) => {
   return (
     <div>
@@ -25,7 +24,7 @@ export const WizardBinaryStep: FC<WizardBinaryStepProps> = ({
       <label htmlFor="binary-yes">Yes</label>
       <input
         defaultChecked={value}
-        onClick={() => onClick && onClick(id, true)}
+        onClick={() => onClick && onClick(true)}
         data-testid="radio-yes"
         id="binary-yes"
         type="radio"
@@ -37,7 +36,7 @@ export const WizardBinaryStep: FC<WizardBinaryStepProps> = ({
       <label htmlFor="binary-false">False</label>
       <input
         defaultChecked={!value}
-        onClick={() => onClick && onClick(id, false)}
+        onClick={() => onClick && onClick(false)}
         data-testid="radio-false"
         id="binary-false"
         type="radio"
