@@ -1,11 +1,10 @@
 import React, {FC} from "react"
-
-import Box from "~/components/Box"
-import Link from "next/link"
 import {ASystem, Question} from "~/domain/quiz"
 import {Wizard} from "~/components/Wizard"
 import {WizardBinaryStep} from "~/components/Wizard/BinaryStep"
 import {WizardSingleSelectionStep} from "~/components/Wizard/SingleSelectionStep"
+import {WizardMultiSelectionStep} from "~/components/Wizard/MultiSelectionStep"
+import Layout from "~/components/Layout"
 
 const STEPS_MAPPING: {[key: string]: (question: Question) => JSX.Element} = {
   // eslint-disable-next-line react/display-name
@@ -24,6 +23,15 @@ const STEPS_MAPPING: {[key: string]: (question: Question) => JSX.Element} = {
       question={question.questionText}
       options={question.answerOptions}
     />
+  ),
+  // eslint-disable-next-line react/display-name
+  MULTI: (question) => (
+    <WizardMultiSelectionStep
+      type="SINGLE"
+      key={question.id}
+      question={question.questionText}
+      options={question.answerOptions}
+    />
   )
 }
 
@@ -31,20 +39,20 @@ export const QuizPage: FC<JSX.Element> = () => {
   const quizModel = ASystem.buildQuiz()
 
   return (
-    <Box color="black">
-      <Link href="/">
-        <a>Close</a>
-      </Link>
-
-      <Wizard>
+    <Layout>
+      <Wizard onSubmit={onSubmit}>
         {quizModel
           .questions()
-          .map((question) => STEPS_MAPPING[question.type](question))}
+          .map((question: Question) => STEPS_MAPPING[question.type](question))}
       </Wizard>
-    </Box>
+    </Layout>
   )
 }
 
 QuizPage.displayName = "QuizPage"
+
+function onSubmit(algo: any) {
+  console.log(algo)
+}
 
 export default QuizPage

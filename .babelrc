@@ -10,6 +10,7 @@
           "~/styles": "./src/styles",
           "~/components": "./src/components",
           "~/domain": "./src/domain",
+          "~/constants": "./src/constants"
         }
       }
     ]

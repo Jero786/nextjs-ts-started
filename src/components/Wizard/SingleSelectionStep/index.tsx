@@ -1,4 +1,8 @@
 import React, {FC, useState} from "react"
+import {Heading} from "~/components/Heading"
+import {Text} from "~/components/Text"
+import {Box} from "~/components/Box"
+import {Radio} from "~/components/Radio"
 
 interface WizardSingleSelectionStepProps {
   readonly question: string
@@ -10,7 +14,7 @@ interface WizardBinaryStepInternal {
   readonly value?: number
   readonly defaultValue?: boolean
   readonly id?: number
-  readonly options: string[]
+  readonly options: any
 }
 
 export const WizardSingleSelectionStep: FC<WizardSingleSelectionStepProps> = ({
@@ -23,14 +27,15 @@ export const WizardSingleSelectionStep: FC<WizardSingleSelectionStepProps> = ({
   const [radioSelectedIndex, setRadioSelectedIndex] = useState(value || 0)
 
   return (
-    <div>
-      <label>{question}</label>
-      <br />
-      {options.map((option, index) => {
+    <article>
+      <Heading size="h1">{question}</Heading>
+      {options.map((option: string, index: number) => {
         return (
-          <div key={`options-single-key-${id}-${index}`}>
-            <label htmlFor="binary-yes">{option}</label>
-            <input
+          <Box py={1} key={`options-single-key-${id}-${index}`}>
+            <Text size="description" htmlFor="binary-yes">
+              {option}
+            </Text>
+            <Radio
               defaultChecked={radioSelectedIndex === index}
               onClick={() => {
                 setRadioSelectedIndex(index)
@@ -41,11 +46,10 @@ export const WizardSingleSelectionStep: FC<WizardSingleSelectionStepProps> = ({
               type="radio"
               name="binary-group"
             />
-            <br />
-          </div>
+          </Box>
         )
       })}
-    </div>
+    </article>
   )
 }
 

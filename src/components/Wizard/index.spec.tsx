@@ -5,6 +5,7 @@ import {screen, fireEvent} from "@testing-library/react"
 import {Wizard} from "."
 import {WizardBinaryStep} from "./BinaryStep"
 import {WizardSingleSelectionStep} from "./SingleSelectionStep"
+import {WizardMultiSelectionStep} from "./MultiSelectionStep"
 
 describe("<Wizard/>", () => {
   describe("WizardBinaryStep", () => {
@@ -231,6 +232,165 @@ describe("<Wizard/>", () => {
 
       expect(onSubmit).toHaveBeenCalledTimes(1)
       expect(onSubmit).toHaveBeenCalledWith({"0": 1, "1": 2})
+    })
+  })
+
+  describe("WizardMultiSelectionStep", () => {
+    test("after click single steps multiple times, after submit should send all options checked", async () => {
+      const onSubmit = jest.fn()
+      render(
+        <Wizard onSubmit={onSubmit}>
+          <WizardMultiSelectionStep
+            question="which movie do you like it?"
+            options={["movie 1", "movie 2", "movie 3"]}
+          />
+          <WizardMultiSelectionStep
+            question="which color do you like it?"
+            options={["red", "blue", "green"]}
+          />
+        </Wizard>
+      )
+
+      fireEvent(
+        screen.getByTestId("option-0"),
+        new MouseEvent("click", {bubbles: true, cancelable: true})
+      )
+
+      fireEvent(
+        screen.getByTestId("option-1"),
+        new MouseEvent("click", {bubbles: true, cancelable: true})
+      )
+
+      fireEvent(
+        screen.getByTestId("cta-continue"),
+        new MouseEvent("click", {bubbles: true, cancelable: true})
+      )
+
+      fireEvent(
+        screen.getByTestId("option-2"),
+        new MouseEvent("click", {bubbles: true, cancelable: true})
+      )
+
+      fireEvent(
+        screen.getByTestId("cta-finish"),
+        new MouseEvent("click", {bubbles: true, cancelable: true})
+      )
+
+      expect(onSubmit).toHaveBeenCalledTimes(1)
+      expect(onSubmit).toHaveBeenCalledWith({"0": [0, 1], "1": [2]})
+    })
+
+    test("should remain selection after move next page and then back", async () => {
+      const onSubmit = jest.fn()
+      render(
+        <Wizard onSubmit={onSubmit}>
+          <WizardMultiSelectionStep
+            question="which movie do you like it?"
+            options={["movie 1", "movie 2", "movie 3"]}
+          />
+          <WizardMultiSelectionStep
+            question="which color do you like it?"
+            options={["red", "blue", "green"]}
+          />
+        </Wizard>
+      )
+
+      fireEvent(
+        screen.getByTestId("option-0"),
+        new MouseEvent("click", {bubbles: true, cancelable: true})
+      )
+
+      fireEvent(
+        screen.getByTestId("option-1"),
+        new MouseEvent("click", {bubbles: true, cancelable: true})
+      )
+
+      fireEvent(
+        screen.getByTestId("cta-continue"),
+        new MouseEvent("click", {bubbles: true, cancelable: true})
+      )
+
+      fireEvent(
+        screen.getByTestId("option-2"),
+        new MouseEvent("click", {bubbles: true, cancelable: true})
+      )
+
+      fireEvent(
+        screen.getByTestId("cta-back"),
+        new MouseEvent("click", {bubbles: true, cancelable: true})
+      )
+
+      fireEvent(
+        screen.getByTestId("cta-continue"),
+        new MouseEvent("click", {bubbles: true, cancelable: true})
+      )
+
+      fireEvent(
+        screen.getByTestId("cta-finish"),
+        new MouseEvent("click", {bubbles: true, cancelable: true})
+      )
+
+      expect(onSubmit).toHaveBeenCalledTimes(1)
+      expect(onSubmit).toHaveBeenCalledWith({"0": [0, 1], "1": [2]})
+    })
+
+    test("clicking multiple times the same item should toggle the state", async () => {
+      const onSubmit = jest.fn()
+      render(
+        <Wizard onSubmit={onSubmit}>
+          <WizardMultiSelectionStep
+            question="which movie do you like it?"
+            options={["movie 1", "movie 2", "movie 3"]}
+          />
+          <WizardMultiSelectionStep
+            question="which color do you like it?"
+            options={["red", "blue", "green"]}
+          />
+        </Wizard>
+      )
+
+      fireEvent(
+        screen.getByTestId("option-0"),
+        new MouseEvent("click", {bubbles: true, cancelable: true})
+      )
+
+      fireEvent(
+        screen.getByTestId("option-0"),
+        new MouseEvent("click", {bubbles: true, cancelable: true})
+      )
+
+      fireEvent(
+        screen.getByTestId("option-1"),
+        new MouseEvent("click", {bubbles: true, cancelable: true})
+      )
+
+      fireEvent(
+        screen.getByTestId("option-1"),
+        new MouseEvent("click", {bubbles: true, cancelable: true})
+      )
+
+      fireEvent(
+        screen.getByTestId("cta-continue"),
+        new MouseEvent("click", {bubbles: true, cancelable: true})
+      )
+
+      fireEvent(
+        screen.getByTestId("option-2"),
+        new MouseEvent("click", {bubbles: true, cancelable: true})
+      )
+
+      fireEvent(
+        screen.getByTestId("option-2"),
+        new MouseEvent("click", {bubbles: true, cancelable: true})
+      )
+
+      fireEvent(
+        screen.getByTestId("cta-finish"),
+        new MouseEvent("click", {bubbles: true, cancelable: true})
+      )
+
+      expect(onSubmit).toHaveBeenCalledTimes(1)
+      expect(onSubmit).toHaveBeenCalledWith({"0": [], "1": []})
     })
   })
 })

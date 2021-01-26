@@ -1,15 +1,15 @@
 import React, {FC} from "react"
 import Link from "next/link"
 
-import Box from "~/components/Box"
+import Layout from "~/components/Layout"
 
 export const Home: FC<JSX.Element> = () => {
   return (
-    <Box color="black" bg="blue">
+    <Layout>
       <Link href="/quiz">
         <a>Go to Quiz</a>
       </Link>
-    </Box>
+    </Layout>
   )
 }
 

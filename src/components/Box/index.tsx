@@ -1,9 +1,9 @@
 import styled from "styled-components"
-import {color} from "styled-system"
+import {space, layout, flex} from "styled-system"
 
-const Box = styled.div`
-  ${color}
-  font-size: 50px;
-  color: ${({theme}) => theme.colors.black};
+export const Box = styled.div`
+  ${space}
+  ${layout}
+${flex}
+display: flex;
 `
-export default Box

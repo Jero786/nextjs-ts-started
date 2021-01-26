@@ -1,5 +1,7 @@
 import React, {FC, useState} from "react"
-import {AnswerOption} from "../../domain/quiz"
+import {AnswerOption} from "~/domain/quiz"
+import {Wrapper, Container} from "~/components/Wizard/styled"
+import {Button} from "~/components/Button"
 
 interface WizardProps {
   children: JSX.Element
@@ -19,14 +21,19 @@ export const Wizard: FC<WizardProps> = ({children, onSubmit}: WizardProps) => {
   const [stepsModel] = useState({} as StepsModel)
   const stepsEl = loadStepsModel(children, stepsModel)
   const hasFinalStep = stepIndex === stepsEl.length - 1
+  const isFirstStep = stepIndex === 0
 
   return (
-    <form>
-      {stepsEl[stepIndex]}
-      {!hasFinalStep && ButtonContinue(setStepIndex, stepIndex)}
-      {hasFinalStep && ButtonBack(setStepIndex, stepIndex)}
-      {hasFinalStep && ButtonSubmit(onSubmit, stepsModel)}
-    </form>
+    <Container>
+      <Wrapper>
+        <form>
+          {stepsEl[stepIndex]}
+          {!isFirstStep && ButtonBack(setStepIndex, stepIndex)}
+          {!hasFinalStep && ButtonContinue(setStepIndex, stepIndex)}
+          {hasFinalStep && ButtonSubmit(onSubmit, stepsModel)}
+        </form>
+      </Wrapper>
+    </Container>
   )
 }
 
@@ -51,7 +58,8 @@ function loadStepsModel(children: JSX.Element, stepsModel: StepsModel) {
 Wizard.displayName = "Wizard"
 
 const ButtonContinue = (setStepIndex: setStepIndexType, stepIndex: number) => (
-  <button
+  <Button
+    variant="primary"
     data-testid="cta-continue"
     role="button"
     onClick={(evt) => {
@@ -60,11 +68,12 @@ const ButtonContinue = (setStepIndex: setStepIndexType, stepIndex: number) => (
     }}
   >
     CONTINUE
-  </button>
+  </Button>
 )
 
 const ButtonBack = (setStepIndex: setStepIndexType, stepIndex: number) => (
-  <button
+  <Button
+    variant="secondary"
     data-testid="cta-back"
     role="button"
     onClick={(evt) => {
@@ -73,14 +82,15 @@ const ButtonBack = (setStepIndex: setStepIndexType, stepIndex: number) => (
     }}
   >
     BACK
-  </button>
+  </Button>
 )
 
 const ButtonSubmit = (
   onSubmit: (all: StepsModel) => void,
   stepsModel: StepsModel
 ) => (
-  <button
+  <Button
+    variant="primary"
     data-testid="cta-finish"
     role="button"
     type="submit"
@@ -90,5 +100,5 @@ const ButtonSubmit = (
     }}
   >
     FINISH
-  </button>
+  </Button>
 )
