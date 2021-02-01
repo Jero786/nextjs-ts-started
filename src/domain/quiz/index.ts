@@ -26,7 +26,7 @@ interface QuizBuilderType {
 }
 
 type BinaryAnswer = true | false
-type SingleAnswer = string
+type SingleAnswer = string | number
 type MultiAnswer = string[]
 export type AnswerOption = SingleAnswer | MultiAnswer | BinaryAnswer
 
@@ -42,7 +42,8 @@ export class ASystem {
           QuestionEnum.KIND_SKIN,
           "Que tipo de piel tenes?",
           ["Seca", "Normal", "Mixta", "Oleosa"],
-          "SINGLE"
+          "SINGLE",
+          1
         )
       )
       .addQuestion(
@@ -50,7 +51,8 @@ export class ASystem {
           QuestionEnum.IS_SKIN_SENSIBLE,
           "Tenes la piel sensible?",
           [true, false],
-          "BINARY"
+          "BINARY",
+          1
         )
       )
       .addQuestion(
@@ -58,7 +60,8 @@ export class ASystem {
           QuestionEnum.DO_YOU_SKIN_CARE_ROUTINE,
           "Realizas una rutina de skin care?",
           [true, false],
-          "BINARY"
+          "BINARY",
+          0
         )
       )
       .addQuestion(
@@ -94,7 +97,8 @@ export class ASystem {
           QuestionEnum.WHAT_SKINCARE_PRODUCTS_DO_YOU_USE,
           "Que productos usas en tu rutina de cuidado de la piel?",
           ["Limpieza", "Serum", "Hidratación", "Protección", "Otros"],
-          "MULTI"
+          "MULTI",
+          "Otros"
         )
       )
       .addQuestion(
@@ -102,7 +106,8 @@ export class ASystem {
           QuestionEnum.DO_YOU_USE_MAKEUP,
           "Te soles maquillar?",
           ["Siempre", "a veces", "nunca"],
-          "SINGLE"
+          "SINGLE",
+          1
         )
       )
 
@@ -234,22 +239,26 @@ export class Question {
     readonly id: QuestionEnum,
     readonly questionText: string,
     readonly answerOptions: readonly AnswerOption[],
-    readonly type: QuestionType
+    readonly type: QuestionType,
+    readonly defaultAnswer?: AnswerOption,
   ) {}
 
   static about(
     id: QuestionEnum,
     questionText: string,
     answerOptions: readonly AnswerOption[],
-    type: QuestionType
+    type: QuestionType,
+    defaultAnswer?: AnswerOption,
   ): Question {
-    return new this(id, questionText, answerOptions, type)
+    return new this(id, questionText, answerOptions, type, defaultAnswer)
   }
 }
 
 export class Answer {
   private constructor(
+    //@ts-ignore
     private readonly question: QuestionEnum,
+    //@ts-ignore
     private readonly answerOption: AnswerOption
   ) {}
 
@@ -259,7 +268,7 @@ export class Answer {
 }
 
 export class Candidate {
-  private constructor(readonly email, readonly password, readonly age) {}
+  private constructor(readonly email: string, readonly password: string, readonly age: string | number) {}
 
   public static named(email: string, password: string, age: number): Candidate {
     return new this(email, password, age)
@@ -268,9 +277,13 @@ export class Candidate {
 
 export class Member {
   private constructor(
-    private readonly email,
-    private readonly password,
-    private readonly age,
+    //@ts-ignore
+    private readonly email: string,
+    //@ts-ignore
+    private readonly password: string,
+    //@ts-ignore
+    private readonly age: string | number,
+    //@ts-ignore
     private readonly answers: Answer[]
   ) {}
 

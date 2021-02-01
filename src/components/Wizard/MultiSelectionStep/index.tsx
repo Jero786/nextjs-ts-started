@@ -1,24 +1,26 @@
 import React, {FC, useState} from "react"
-import {Container} from "./styled"
 import {Checkbox} from "~/components/Checkbox"
 import {Heading} from "~/components/Heading"
 import {Text} from "~/components/Text"
 import {Box} from "~/components/Box"
+import {AnswerOption, QuestionType} from "~/domain/quiz"
 
 interface WizardSingleSelectionStepProps {
   readonly question: string
-  readonly options: string
+  readonly options: readonly AnswerOption[]
+  readonly type: QuestionType;
+  readonly defaultValue?: AnswerOption,
 }
 
 interface WizardBinaryStepInternal {
-  readonly onClick?: (optionSelected: number) => void
+  readonly onClick?: (optionSelected: any) => void
   readonly value?: number[]
-  readonly defaultValue?: boolean
+  readonly defaultValue?: AnswerOption
   readonly id?: number
-  readonly options: string[]
+  readonly options: readonly AnswerOption[]
 }
 
-export const WizardMultiSelectionStep: FC<WizardSingleSelectionStepProps> = ({
+export const WizardMultiSelectionStep: FC<WizardSingleSelectionStepProps & WizardBinaryStepInternal> = ({
   question,
   onClick,
   id,
@@ -28,35 +30,36 @@ export const WizardMultiSelectionStep: FC<WizardSingleSelectionStepProps> = ({
   const [selectedValues, setSelectedValues] = useState(value || [])
 
   return (
-    <Container>
+    <Box flexDirection="column">
       <Heading size="h1">{question}</Heading>
-      <br />
-      {options.map((option, index) => {
-        return (
-          <Box key={`options-single-key-${id}-${index}`}>
-            <Text size="description" htmlFor="binary-yes">
-              {option}
-            </Text>
-            <Checkbox
-              defaultChecked={selectedValues.indexOf(index) > -1}
-              onClick={() => {
-                const newSelectedValues =
-                  selectedValues.indexOf(index) > -1
-                    ? selectedValues.filter((number) => number !== index)
-                    : [...selectedValues, index]
+      <Box flexDirection="column" m="0 auto" alignItems="flex-end">
+        {options.map((option, index) => {
+          return (
+            <Box justifyContent="space-around" key={`options-single-key-${id}-${index}`}>
+              <Text size="description" htmlFor="binary-yes">
+                {option}
+              </Text>
+              <Checkbox
+                defaultChecked={selectedValues.indexOf(index) > -1}
+                onClick={() => {
+                  const newSelectedValues =
+                    selectedValues.indexOf(index) > -1
+                      ? selectedValues.filter((number) => number !== index)
+                      : [...selectedValues, index]
 
-                setSelectedValues(newSelectedValues)
-                onClick && onClick(newSelectedValues)
-              }}
-              data-testid={`option-${index}`}
-              id={`option-${index}`}
-              name="binary-group"
-            />
-            <br />
-          </Box>
-        )
-      })}
-    </Container>
+                  setSelectedValues(newSelectedValues)
+                  onClick && onClick(newSelectedValues)
+                }}
+                data-testid={`option-${index}`}
+                id={`option-${index}`}
+                name="binary-group"
+              />
+              <br/>
+            </Box>
+          )
+        })}
+      </Box>
+    </Box>
   )
 }
 

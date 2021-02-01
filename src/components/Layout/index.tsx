@@ -11,9 +11,9 @@ interface Props {
 export const Layout: FC<Props> = ({children}: Props) => {
   return (
     <>
-      <Header>HEADER</Header>
+      <Header/>
       <Body>{children}</Body>
-      <Footer>Footer</Footer>
+      <Footer/>
     </>
   )
 }

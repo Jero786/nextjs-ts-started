@@ -5,7 +5,11 @@ import PropTypes from "prop-types"
 import theme from "~/styles/theme"
 import GlobalStyle from "~/styles/global"
 
-const App = ({Component, pageProps}): JSX.Element => (
+interface Props {
+  Component: any;
+  pageProps: any;
+}
+const App = ({Component, pageProps}: Props): JSX.Element => (
   <>
     <GlobalStyle />
     <ThemeProvider theme={theme}>

@@ -1,7 +1,7 @@
 import styled from "styled-components"
-import {HEADER_HEIGHT, FOOTER_HEIGHT} from "~/constants"
 import React, {FC} from "react"
-import {MAX_WIDTH_CONTENT} from "~/constants"
+import {FOOTER_HEIGHT, HEADER_HEIGHT, MAX_WIDTH_CONTENT} from "../../../constants"
+
 
 const Wrapper = styled.div`
   display: flex;
@@ -20,7 +20,7 @@ interface Props {
   children: JSX.Element
 }
 
-export const Body: FC<JSX.Element> = ({children}: Props) => {
+export const Body: FC<Props> = ({children}: Props) => {
   return (
     <Wrapper>
       <Content>{children}</Content>

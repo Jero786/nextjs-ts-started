@@ -1,9 +1,15 @@
 {
   "compilerOptions": {
-    "baseUrl": "src",
+    "baseUrl": "./src",
     "paths": {
-      "test-utils": ["./src/utils/tests"]
+      "~/*": ["/*"],
+      "test-utils": ["./utils/tests"],
+      "~/components/*": ["./components/*"],
+      "~/styles/*": ["./styles/*"],
+      "~/domain/*": ["./domain/*"],
+      "~/constants/*": ["./constants/*"]
     },
+    "types": ["jest", "node"],
     "target": "esnext",
     "module": "esnext",
     "jsx": "preserve",
@@ -24,6 +30,6 @@
     "resolveJsonModule": true,
     "isolatedModules": true
   },
-  "exclude": ["node_modules"],
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"]
+  "exclude": ["node_modules", "**/*.spec.tsx", "**/*.spec.ts", "**/*.spec.js"],
+  "include": ["next-env.d.ts", "node_modules/@types", "**/*.ts", "**/*.tsx"]
 }

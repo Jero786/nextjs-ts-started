@@ -76,12 +76,12 @@ describe("The system", () => {
   it("should answer amount of questions", () => {
     const quiz = ASystem.buildQuiz()
 
-    expect(quiz.amountQuestion()).toEqual(2)
+    expect(quiz.amountQuestion()).toEqual(12)
   })
 
   it("should answer the list of questions", () => {
     const quiz = ASystem.buildQuiz()
 
-    expect(quiz.questions().length).toEqual(2)
+    expect(quiz.questions().length).toEqual(12)
   })
 })

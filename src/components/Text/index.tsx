@@ -4,24 +4,18 @@ import {Description, Terms, Label} from "./styled"
 export interface Props {
   readonly size?: "description" | "terms" | "label"
   readonly children: ReactNode
+  readonly htmlFor: string;
 }
 
 export const Text = (props: Props) => {
-  let HeadingComponent
-
   switch (props.size) {
     case "description":
-      HeadingComponent = Description
-      break
+      return <Description {...props}/>
     case "terms":
-      HeadingComponent = Terms
-      break
+      return <Terms {...props}/>
     case "label":
-      HeadingComponent = Label
-      break
+      return <Label {...props}/>
     default:
-      HeadingComponent = Label
+      return <Label {...props}/>
   }
-
-  return <HeadingComponent {...props} />
 }

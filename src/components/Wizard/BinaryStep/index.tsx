@@ -1,54 +1,57 @@
 import React, {FC} from "react"
 import {Box} from "~/components/Box"
 import {Radio} from "~/components/Radio"
+import {Text} from "~/components/Text"
 import {Heading} from "~/components/Heading"
+import {AnswerOption, QuestionType} from "~/domain/quiz"
 
 interface WizardBinaryStepProps {
-  readonly question: string
+  readonly type: QuestionType;
+  readonly question: string;
+  readonly defaultValue?: AnswerOption,
 }
 
 interface WizardBinaryStepInternal {
   readonly onClick?: (isChecked: boolean) => void
   readonly value?: boolean
-  readonly defaultValue?: boolean
   readonly id?: number
 }
 
 export const WizardBinaryStep: FC<WizardBinaryStepProps> = ({
-  question,
-  value,
-  onClick
-}: WizardBinaryStepProps & WizardBinaryStepInternal) => {
+                                                              question,
+                                                              value,
+                                                              onClick
+                                                            }: WizardBinaryStepProps & WizardBinaryStepInternal) => {
   return (
-    <div>
+    <Box flexDirection="column" alignItems="center">
       <Heading size="h1">{question}</Heading>
-      <br />
-      <Box py={1}>
-        <label htmlFor="binary-yes">Yes</label>
-        <Radio
-          defaultChecked={value}
-          onClick={() => onClick && onClick(true)}
-          data-testid="radio-yes"
-          id="binary-yes"
-          type="radio"
-          name="binary-group"
-          value="true"
-        />
-        <br />
-
-        <label htmlFor="binary-false">False</label>
-        <input
-          defaultChecked={!value}
-          onClick={() => onClick && onClick(false)}
-          data-testid="radio-false"
-          id="binary-false"
-          type="radio"
-          name="binary-group"
-          value="false"
-        />
-        <br />
+      <Box flexDirection="column" m="0 auto" alignItems="flex-end">
+        <Box>
+          <Text size="description" htmlFor="binary-yes">SI</Text>
+          <Radio
+            defaultChecked={value}
+            onClick={() => onClick && onClick(true)}
+            data-testid="radio-yes"
+            id="binary-yes"
+            type="radio"
+            name="binary-group"
+            value="true"
+          />
+        </Box>
+        <Box>
+          <Text size="description" htmlFor="binary-false">NO</Text>
+          <input
+            defaultChecked={!value}
+            onClick={() => onClick && onClick(false)}
+            data-testid="radio-false"
+            id="binary-false"
+            type="radio"
+            name="binary-group"
+            value="false"
+          />
+        </Box>
       </Box>
-    </div>
+    </Box>
   )
 }
 

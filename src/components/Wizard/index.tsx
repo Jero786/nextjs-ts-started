@@ -2,14 +2,15 @@ import React, {FC, useState} from "react"
 import {AnswerOption} from "~/domain/quiz"
 import {Wrapper, Container} from "~/components/Wizard/styled"
 import {Button} from "~/components/Button"
+import {Box} from "~/components/Box"
 
 interface WizardProps {
-  children: JSX.Element
+  children: JSX.Element[]
   onSubmit: (all: StepsModel) => void
 }
 
 interface StepsModel {
-  [key: string]: AnswerOption
+  [key: string]: string | number | AnswerOption
 }
 
 type setStepIndexType = (
@@ -27,17 +28,22 @@ export const Wizard: FC<WizardProps> = ({children, onSubmit}: WizardProps) => {
     <Container>
       <Wrapper>
         <form>
+          <Box style={{color: 'gray'}}>
+            Pasos {stepIndex + 1} / {children.length}
+          </Box>
           {stepsEl[stepIndex]}
-          {!isFirstStep && ButtonBack(setStepIndex, stepIndex)}
-          {!hasFinalStep && ButtonContinue(setStepIndex, stepIndex)}
-          {hasFinalStep && ButtonSubmit(onSubmit, stepsModel)}
+          <Box justifyContent="center" mt="1rem">
+            {!isFirstStep && ButtonBack(setStepIndex, stepIndex)}
+            {!hasFinalStep && ButtonContinue(setStepIndex, stepIndex)}
+            {hasFinalStep && ButtonSubmit(onSubmit, stepsModel)}
+          </Box>
         </form>
       </Wrapper>
     </Container>
   )
 }
 
-function loadStepsModel(children: JSX.Element, stepsModel: StepsModel) {
+function loadStepsModel(children: JSX.Element[], stepsModel: StepsModel) {
   return React.Children.map(children, (step, stepIndex) => {
     if (stepsModel[stepIndex] === undefined) {
       stepsModel[stepIndex] = step.props.defaultValue
@@ -58,47 +64,53 @@ function loadStepsModel(children: JSX.Element, stepsModel: StepsModel) {
 Wizard.displayName = "Wizard"
 
 const ButtonContinue = (setStepIndex: setStepIndexType, stepIndex: number) => (
-  <Button
-    variant="primary"
-    data-testid="cta-continue"
-    role="button"
-    onClick={(evt) => {
-      evt.preventDefault()
-      setStepIndex(stepIndex + 1)
-    }}
-  >
-    CONTINUE
-  </Button>
+  <Box>
+    <Button
+      variant="primary"
+      data-testid="cta-continue"
+      role="button"
+      onClick={(evt: Event) => {
+        evt.preventDefault()
+        setStepIndex(stepIndex + 1)
+      }}
+    >
+      Continuar
+    </Button>
+  </Box>
 )
 
 const ButtonBack = (setStepIndex: setStepIndexType, stepIndex: number) => (
-  <Button
-    variant="secondary"
-    data-testid="cta-back"
-    role="button"
-    onClick={(evt) => {
-      evt.preventDefault()
-      setStepIndex(stepIndex - 1)
-    }}
-  >
-    BACK
-  </Button>
+  <Box mr={"1rem"}>
+    <Button
+      variant="secondary"
+      data-testid="cta-back"
+      role="button"
+      onClick={(evt: Event) => {
+        evt.preventDefault()
+        setStepIndex(stepIndex - 1)
+      }}
+    >
+      Atras
+    </Button>
+  </Box>
 )
 
 const ButtonSubmit = (
   onSubmit: (all: StepsModel) => void,
   stepsModel: StepsModel
 ) => (
-  <Button
-    variant="primary"
-    data-testid="cta-finish"
-    role="button"
-    type="submit"
-    onClick={(evt) => {
-      evt.preventDefault()
-      onSubmit(stepsModel)
-    }}
-  >
-    FINISH
-  </Button>
+  <Box mr={"1rem"}>
+    <Button
+      variant="primary"
+      data-testid="cta-finish"
+      role="button"
+      type="submit"
+      onClick={(evt: Event) => {
+        evt.preventDefault()
+        onSubmit(stepsModel)
+      }}
+    >
+      Terminar
+    </Button>
+  </Box>
 )

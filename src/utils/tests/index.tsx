@@ -2,7 +2,7 @@ import React from "react"
 import {ThemeProvider} from "styled-components"
 import {render as renderLib, queries} from "@testing-library/react"
 
-const customRender = (component, options) => {
+const customRender = (component: JSX.Element, options: any) => {
   const ui = <ThemeProvider theme={{colors: {}}}>{component}</ThemeProvider>
   return renderLib(ui, {queries: {...queries}, ...options})
 }

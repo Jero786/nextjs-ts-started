@@ -13,8 +13,10 @@ export default {
     white: "#fff",
     blue: "#007ce0",
     navy: "#004175",
-    primary: "blue",
-    secondary: "navy"
+    primary: "#fce4ec",
+    primaryDark: "#c9b2ba",
+    secondary: "#e3f2fd",
+    secondaryDark: "#b1bfca",
   },
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
   breakpoints: breakpointsValues,

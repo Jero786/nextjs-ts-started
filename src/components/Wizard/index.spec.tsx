@@ -1,5 +1,6 @@
 import React from "react"
 
+import {describe, expect, test} from  '@jest/globals'
 import {render} from "../../utils/tests"
 import {screen, fireEvent} from "@testing-library/react"
 import {Wizard} from "."
@@ -9,6 +10,7 @@ import {WizardMultiSelectionStep} from "./MultiSelectionStep"
 
 describe("<Wizard/>", () => {
   describe("WizardBinaryStep", () => {
+
     test("should display with a simple binary step selected by default true as first question", async () => {
       render(
         <Wizard>
@@ -187,6 +189,8 @@ describe("<Wizard/>", () => {
       expect(onSubmit).toHaveBeenCalledTimes(1)
       expect(onSubmit).toHaveBeenCalledWith({"0": true, "1": false})
     })
+
+
   })
 
   describe("WizardSingleSelectionStep", () => {
@@ -236,6 +240,7 @@ describe("<Wizard/>", () => {
   })
 
   describe("WizardMultiSelectionStep", () => {
+
     test("after click single steps multiple times, after submit should send all options checked", async () => {
       const onSubmit = jest.fn()
       render(

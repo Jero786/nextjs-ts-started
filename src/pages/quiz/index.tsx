@@ -13,6 +13,7 @@ const STEPS_MAPPING: {[key: string]: (question: Question) => JSX.Element} = {
       type="BINARY"
       key={question.id}
       question={question.questionText}
+      defaultValue={question.defaultAnswer}
     />
   ),
   // eslint-disable-next-line react/display-name
@@ -22,6 +23,7 @@ const STEPS_MAPPING: {[key: string]: (question: Question) => JSX.Element} = {
       key={question.id}
       question={question.questionText}
       options={question.answerOptions}
+      defaultValue={question.defaultAnswer}
     />
   ),
   // eslint-disable-next-line react/display-name
@@ -31,6 +33,7 @@ const STEPS_MAPPING: {[key: string]: (question: Question) => JSX.Element} = {
       key={question.id}
       question={question.questionText}
       options={question.answerOptions}
+      defaultValue={question.defaultAnswer}
     />
   )
 }
@@ -51,8 +54,8 @@ export const QuizPage: FC<JSX.Element> = () => {
 
 QuizPage.displayName = "QuizPage"
 
-function onSubmit(algo: any) {
-  console.log(algo)
+function onSubmit() {
+  alert('*** PERFIL CREADO EXITOSAMENTE ***')
 }
 
 export default QuizPage
